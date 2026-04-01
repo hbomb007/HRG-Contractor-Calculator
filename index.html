@@ -137,7 +137,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
   <div class="hdr">
     <div class="hdr-top">
       <span class="badge">HRG</span>
-      <span class="partner">Payroll partner: Oncore Services</span>
+      
     </div>
     <h1>Contractor Pricing Tool</h1>
     <p>Price up candidates · Forecast contract value · Check margins · Back-calculate rates</p>
@@ -221,7 +221,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
         <div class="iw hsfx"><input type="number" id="p-margin" value="20" min="1" max="99" step="0.5" oninput="clearPrice()"><span class="isfx">%</span></div>
       </div>
       <div class="fr">
-        <label>Oncore Fee %</label>
+        <label>Management Fee %</label>
         <div class="iw hsfx"><input type="number" id="p-oncore" value="5.25" min="0" max="20" step="0.05"><span class="isfx">%</span></div>
       </div>
       <div class="fr">
@@ -309,7 +309,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
         <div class="iw hsfx"><input type="number" id="bc-margin" value="20" min="1" max="99" step="0.5" oninput="clearBudget()"><span class="isfx">%</span></div>
       </div>
       <div class="fr">
-        <label>Oncore Fee %</label>
+        <label>Management Fee %</label>
         <div class="iw hsfx"><input type="number" id="bc-oncore" value="5.25" min="0" max="20" step="0.05"><span class="isfx">%</span></div>
       </div>
       <div class="fr">
@@ -375,7 +375,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
         </select>
       </div>
       <div class="fr">
-        <label>Oncore Fee %</label>
+        <label>Management Fee %</label>
         <div class="iw hsfx"><input type="number" id="mc-oncore" value="5.25" min="0" max="20" step="0.05"><span class="isfx">%</span></div>
       </div>
     </div>
@@ -396,7 +396,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 
 </div>
 
-<p class="disc">Rates indicative only · Confirm Oncore fee with your account manager · Super 12% (FY2025–26) · Margin = % of bill rate</p>
+<p class="disc">Rates indicative only · Confirm Management fee with your account manager · Super 12% (FY2025–26) · Margin = % of bill rate</p>
 
 </main>
 
@@ -487,7 +487,7 @@ function calcPrice(){
   const margAmt=bill-cost;
   const hrBill=bill/HPD;
   const effGM=margAmt/bill;
-  const netDay=margAmt-oncAmt;         // HRG keeps after paying Oncore
+  const netDay=margAmt-oncAmt;         // HRG net after management fee
 
   const hero=$('price-hero');
   hero.classList.add('show');
@@ -505,7 +505,7 @@ function calcPrice(){
     <div class="br"><span class="n">Candidate base rate /day</span><span class="p"></span><span class="a">${fd(dayBase)}</span></div>
     <div class="br"><span class="n">+ Super (${fp(supPct)})</span><span class="p"></span><span class="a">${fd(supAmt)}</span></div>
     <div class="br sub"><span class="n">Candidate inc. Super</span><span class="p"></span><span class="a">${fd(ris)}</span></div>
-    <div class="br"><span class="n">+ Oncore fee</span><span class="p">${fp(oncPct)}</span><span class="a">${fd(oncAmt)}</span></div>
+    <div class="br"><span class="n">+ Management fee</span><span class="p">${fp(oncPct)}</span><span class="a">${fd(oncAmt)}</span></div>
     <div class="br"><span class="n">+ Payroll Tax (${loc})</span><span class="p">${fp(pt)}</span><span class="a">${fd(ptAmt)}</span></div>
     <div class="br sub"><span class="n">Total cost to HRG</span><span class="p"></span><span class="a">${fd(cost)}</span></div>
     <div class="br mr"><span class="n">+ HRG Gross Margin</span><span class="p">${fp(margPct)} of bill rate</span><span class="a">${fd(margAmt)}</span></div>
@@ -514,7 +514,7 @@ function calcPrice(){
   const gc=effGM>=0.18?'#6EE7B7':effGM>=0.12?'#FDE68A':'#FCA5A5';
   $('ph-gm').style.cssText=`color:${gc};border:1px solid ${gc}44;background:${gc}18`;
   $('ph-gm').textContent='✓ Effective GM: '+fp(effGM);
-  $('ph-net').textContent='HRG nets after Oncore: '+fd(netDay)+'/day';
+  $('ph-net').textContent='HRG net after mgmt fee: '+fd(netDay)+'/day';
 
   // FORECAST
   if(!isNaN(weeks)&&weeks>0){
@@ -542,12 +542,12 @@ function calcPrice(){
       <thead><tr><th>Item</th><th>Per Day</th><th>Per Week</th><th>Full Term (${Math.round(days)}d)</th></tr></thead>
       <tbody>
         <tr><td>Candidate cost (inc. Super)</td><td>${fd(ris)}</td><td>${fd(ris*dpw)}</td><td>${fd(totalRIS)}</td></tr>
-        <tr><td>Oncore fee</td><td>${fd(oncAmt)}</td><td>${fd(oncAmt*dpw)}</td><td>${fd(totalOnc)}</td></tr>
+        <tr><td>Management fee</td><td>${fd(oncAmt)}</td><td>${fd(oncAmt*dpw)}</td><td>${fd(totalOnc)}</td></tr>
         <tr><td>Payroll Tax (${loc})</td><td>${fd(ptAmt)}</td><td>${fd(ptAmt*dpw)}</td><td>${fd(totalPT)}</td></tr>
         <tr class="tot"><td>Total cost to HRG</td><td>${fd(cost)}</td><td>${fd(cost*dpw)}</td><td>${fd(totalCost)}</td></tr>
         <tr class="tot"><td>Client billing (revenue)</td><td>${fd(bill)}</td><td>${fd(bill*dpw)}</td><td>${fd(totalBill)}</td></tr>
         <tr><td>HRG gross margin (${fp(margPct,1)})</td><td>${fd(margAmt)}</td><td>${fd(margAmt*dpw)}</td><td>${fd(totalMarg)}</td></tr>
-        <tr><td>Less Oncore</td><td>-${fd(oncAmt)}</td><td>-${fd(oncAmt*dpw)}</td><td>-${fd(totalOnc)}</td></tr>
+        <tr><td>Less mgmt fee</td><td>-${fd(oncAmt)}</td><td>-${fd(oncAmt*dpw)}</td><td>-${fd(totalOnc)}</td></tr>
         <tr class="net"><td>HRG net margin</td><td>${fd(netDay)}</td><td>${fd(netDay*dpw)}</td><td>${fd(totalNet)}</td></tr>
         ${renewRow}
       </tbody>`;
@@ -589,10 +589,10 @@ function calcBudget(){
     <div class="mc-row"><span class="mn">Base rate excl. Super (approx.)</span><span class="mv">${fd(dayBase)}/day · ${fd(dayBase/HPD)}/hr</span></div>
     <div class="mc-row"><span class="mn">Super component (${fp(supPct)})</span><span class="mv">${fd(supAmt)}/day</span></div>
     <div class="mc-row"><span class="mn">Payroll Tax — ${loc} (${fp(pt)})</span><span class="mv">${fd(ptAmt)}/day</span></div>
-    <div class="mc-row"><span class="mn">Oncore Fee (${fp(oncPct)})</span><span class="mv">${fd(oncAmt)}/day</span></div>
+    <div class="mc-row"><span class="mn">Management Fee (${fp(oncPct)})</span><span class="mv">${fd(oncAmt)}/day</span></div>
     <div class="mc-row mct"><span class="mn">Total cost to HRG</span><span class="mv">${fd(cost)}/day</span></div>
     <div class="mc-row mcm"><span class="mn">HRG gross margin (${fp(margPct,1)})</span><span class="mv">${fd(margAmt)}/day</span></div>
-    <div class="mc-row mcm"><span class="mn">HRG net after Oncore</span><span class="mv">+${fd(netDay)}/day · +${fd(netDay*5*48)}/yr est.</span></div>`;
+    <div class="mc-row mcm"><span class="mn">HRG net after mgmt fee</span><span class="mv">+${fd(netDay)}/day · +${fd(netDay*5*48)}/yr est.</span></div>`;
 }
 
 function calcCheck(){
@@ -629,11 +629,11 @@ function calcCheck(){
   $('mc-rows').innerHTML=`
     <div class="mc-row"><span class="mn">Candidate rate inc. Super</span><span class="mv">${fd(cr)}/day</span></div>
     <div class="mc-row"><span class="mn">Payroll Tax — ${loc} (${fp(pt)})</span><span class="mv">${fd(ptAmt)}/day</span></div>
-    <div class="mc-row"><span class="mn">Oncore Fee (${fp(oncPct)})</span><span class="mv">${fd(oncAmt)}/day</span></div>
+    <div class="mc-row"><span class="mn">Management Fee (${fp(oncPct)})</span><span class="mv">${fd(oncAmt)}/day</span></div>
     <div class="mc-row mct"><span class="mn">Total cost to HRG</span><span class="mv">${fd(cost)}/day</span></div>
     <div class="mc-row mct"><span class="mn">Your bill rate</span><span class="mv">${fd(bill)}/day</span></div>
     <div class="mc-row mcm"><span class="mn">Your gross margin</span><span class="mv">${fp(margPct,1)} · ${fd(margAmt)}/day</span></div>
-    <div class="mc-row mcm"><span class="mn">HRG net after Oncore</span><span class="mv">+${fd(netDay)}/day · +${fd(annualNet)}/yr est.</span></div>
+    <div class="mc-row mcm"><span class="mn">HRG net after mgmt fee</span><span class="mv">+${fd(netDay)}/day · +${fd(annualNet)}/yr est.</span></div>
     ${margPct<0?'<div class="mc-row" style="color:var(--bad);font-weight:700;font-size:13px">⚠ Bill rate is below cost — this placement loses money.</div>':''}`;
 }
 
